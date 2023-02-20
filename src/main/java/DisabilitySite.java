@@ -2,6 +2,7 @@ import java.util.Date;
 
 public class DisabilitySite extends AbstractSite {
 	private static final Dollars FUEL_TAX_CAP = new Dollars (0.10);
+	public static final double FUEL_RATE = 0.0175;
 	private Zone _zone;
 	private static final int CAP = 200;
 
@@ -16,7 +17,7 @@ public class DisabilitySite extends AbstractSite {
 		result = _zone.computeSeasonRate(usage, start, end);
 		result = result.plus(new Dollars (Math.max(fullUsage - usage, 0) * 0.062));
 		result = result.plus(result.times(TAX_RATE));
-		Dollars fuel = new Dollars(fullUsage * 0.0175);
+		Dollars fuel = new Dollars(fullUsage * FUEL_RATE);
 		result = result.plus(fuel);
 		result = result.plus(fuel.times(TAX_RATE).minus(FUEL_TAX_CAP)).max(Dollars.ZERO);
 		return result;
