@@ -55,23 +55,20 @@ public class Zone {
 	}
 
 	private double computeSummerFraction(Date start, Date end) {
-		double summerFraction;
 		if (isWinterPeriod(start, end))
-			summerFraction = 0;
-		else if (!isWinterPeriod(end, start) && !isWinterPeriod(start, end))
-			summerFraction = 1;
-		else { // part in summer part in winter
-			double summerDays;
-			if (start.before(summerStart()) || start.after(summerEnd())) {
-				// end is in the summer
-				summerDays = dayOfYear(end) - dayOfYear(summerStart()) + 1;
-			} else {
-				// start is in summer
-				summerDays = dayOfYear(summerEnd()) - dayOfYear(start) + 1;
-			}
-			summerFraction = summerDays / (dayOfYear(end) - dayOfYear(start) + 1);
+			return 0;
+		if (!isWinterPeriod(end, start) && !isWinterPeriod(start, end))
+			return 1;
+		// part in summer part in winter
+		double summerDays;
+		if (start.before(summerStart()) || start.after(summerEnd())) {
+			// end is in the summer
+			summerDays = dayOfYear(end) - dayOfYear(summerStart()) + 1;
+		} else {
+			// start is in summer
+			summerDays = dayOfYear(summerEnd()) - dayOfYear(start) + 1;
 		}
-		return summerFraction;
+		return summerDays / (dayOfYear(end) - dayOfYear(start) + 1);
 	}
 
 	private boolean isWinterPeriod(Date start, Date end) {
