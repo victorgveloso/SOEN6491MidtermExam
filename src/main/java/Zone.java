@@ -48,7 +48,7 @@ public class Zone {
 	public Dollars computeSeasonRate(int usage, Date start, Date end) {
 		double summerFraction;
 		Dollars result;
-		if (start.after(summerEnd()) || end.before(summerStart()))
+		if (isWinterPeriod(start, end))
 			summerFraction = 0;
 		else if (!start.before(summerStart()) && !start.after(summerEnd()) &&
 				!end.before(summerStart()) && !end.after(summerEnd()))
@@ -67,6 +67,10 @@ public class Zone {
 		result = new Dollars((usage * summerRate() * summerFraction) +
 				(usage * winterRate() * (1 - summerFraction)));
 		return result;
+	}
+
+	private boolean isWinterPeriod(Date start, Date end) {
+		return start.after(summerEnd()) || end.before(summerStart());
 	}
 
 	private static int dayOfYear(Date arg) {
