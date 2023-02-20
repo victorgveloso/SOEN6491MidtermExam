@@ -4,7 +4,7 @@ public abstract class AbstractSite {
     protected static final double TAX_RATE = 0.05;
     private Reading[] _readings = new Reading[1000];
 
-    public static Dollars getDollars(int usage, Date start, Date end, Zone zone) {
+    public static Dollars computeSeasonRate(int usage, Date start, Date end, Zone zone) {
         double summerFraction;
         Dollars result;
         if (start.after(zone.summerEnd()) || end.before(zone.summerStart()))

@@ -14,7 +14,7 @@ public class DisabilitySite extends AbstractSite {
 		Dollars result;
 		double summerFraction;
 		int usage = Math.min(fullUsage, CAP);
-		result = ResidentialSite.getDollars(usage, start, end, _zone);
+		result = ResidentialSite.computeSeasonRate(usage, start, end, _zone);
 		result = result.plus(new Dollars (Math.max(fullUsage - usage, 0) * 0.062));
 		result = result.plus(result.times(TAX_RATE));
 		Dollars fuel = new Dollars(fullUsage * 0.0175);

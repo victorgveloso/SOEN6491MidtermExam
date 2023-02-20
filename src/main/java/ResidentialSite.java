@@ -12,7 +12,7 @@ public class ResidentialSite extends AbstractSite {
 		Dollars result;
 		double summerFraction;
 		// Find out how much of period is in the summer
-		result = getDollars(usage, start, end, _zone);
+		result = computeSeasonRate(usage, start, end, _zone);
 		result = result.plus(result.times(TAX_RATE));
 		Dollars fuel = new Dollars(usage * 0.0175);
 		result = result.plus(fuel);
