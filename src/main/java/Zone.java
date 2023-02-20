@@ -44,4 +44,28 @@ public class Zone {
 	public double summerRate() {
 		return _summerRate;
 	}
+
+	public Dollars computeSeasonRate(int usage, Date start, Date end) {
+		double summerFraction;
+		Dollars result;
+		if (start.after(summerEnd()) || end.before(summerStart()))
+			summerFraction = 0;
+		else if (!start.before(summerStart()) && !start.after(summerEnd()) &&
+				!end.before(summerStart()) && !end.after(summerEnd()))
+			summerFraction = 1;
+		else { // part in summer part in winter
+			double summerDays;
+			if (start.before(summerStart()) || start.after(summerEnd())) {
+				// end is in the summer
+				summerDays = AbstractSite.dayOfYear(end) - AbstractSite.dayOfYear(summerStart()) + 1;
+			} else {
+				// start is in summer
+				summerDays = AbstractSite.dayOfYear(summerEnd()) - AbstractSite.dayOfYear(start) + 1;
+			}
+			summerFraction = summerDays / (AbstractSite.dayOfYear(end) - AbstractSite.dayOfYear(start) + 1);
+		}
+		result = new Dollars((usage * summerRate() * summerFraction) +
+				(usage * winterRate() * (1 - summerFraction)));
+		return result;
+	}
 }

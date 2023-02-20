@@ -4,30 +4,6 @@ public abstract class AbstractSite {
     protected static final double TAX_RATE = 0.05;
     private Reading[] _readings = new Reading[1000];
 
-    public static Dollars computeSeasonRate(int usage, Date start, Date end, Zone zone) {
-        double summerFraction;
-        Dollars result;
-        if (start.after(zone.summerEnd()) || end.before(zone.summerStart()))
-            summerFraction = 0;
-        else if (!start.before(zone.summerStart()) && !start.after(zone.summerEnd()) &&
-                !end.before(zone.summerStart()) && !end.after(zone.summerEnd()))
-            summerFraction = 1;
-        else { // part in summer part in winter
-            double summerDays;
-            if (start.before(zone.summerStart()) || start.after(zone.summerEnd())) {
-                // end is in the summer
-                summerDays = AbstractSite.dayOfYear(end) - AbstractSite.dayOfYear(zone.summerStart()) + 1;
-            } else {
-                // start is in summer
-                summerDays = AbstractSite.dayOfYear(zone.summerEnd()) - AbstractSite.dayOfYear(start) + 1;
-            }
-            summerFraction = summerDays / (AbstractSite.dayOfYear(end) - AbstractSite.dayOfYear(start) + 1);
-        }
-        result = new Dollars((usage * zone.summerRate() * summerFraction) +
-                (usage * zone.winterRate() * (1 - summerFraction)));
-        return result;
-    }
-
     static int dayOfYear(Date arg) {
         int result;
         switch (arg.getMonth()) {
