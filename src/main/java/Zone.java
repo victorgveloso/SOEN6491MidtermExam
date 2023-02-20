@@ -33,15 +33,11 @@ public class Zone {
 		return _summerStart;
 	}
 
-	public double summerRate() {
-		return _summerRate;
-	}
-
 	public Dollars computeSeasonRate(int usage, Date start, Date end) {
 		double summerFraction;
 		Dollars result;
 		summerFraction = computeSummerFraction(start, end);
-		result = new Dollars((usage * summerRate() * summerFraction) +
+		result = new Dollars((usage * _summerRate * summerFraction) +
 				(usage * _winterRate * (1 - summerFraction)));
 		return result;
 	}
