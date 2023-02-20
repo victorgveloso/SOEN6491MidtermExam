@@ -31,7 +31,7 @@ public class ResidentialSite {
 		Dollars result;
 		double summerFraction;
 		// Find out how much of period is in the summer
-		result = getDollars(usage, start, end);
+		result = getDollars(usage, start, end, _zone);
 		result = result.plus(result.times(TAX_RATE));
 		Dollars fuel = new Dollars(usage * 0.0175);
 		result = result.plus(fuel);
@@ -39,27 +39,27 @@ public class ResidentialSite {
 		return result;
 	}
 
-	private Dollars getDollars(int usage, Date start, Date end) {
+	private Dollars getDollars(int usage, Date start, Date end, Zone zone) {
 		double summerFraction;
 		Dollars result;
-		if (start.after(_zone.summerEnd()) || end.before(_zone.summerStart()))
+		if (start.after(zone.summerEnd()) || end.before(zone.summerStart()))
 			summerFraction = 0;
-		else if (!start.before(_zone.summerStart()) && !start.after(_zone.summerEnd()) &&
-				!end.before(_zone.summerStart()) && !end.after(_zone.summerEnd()))
+		else if (!start.before(zone.summerStart()) && !start.after(zone.summerEnd()) &&
+				!end.before(zone.summerStart()) && !end.after(zone.summerEnd()))
 			summerFraction = 1;
 		else { // part in summer part in winter
 			double summerDays;
-			if (start.before(_zone.summerStart()) || start.after(_zone.summerEnd())) {
+			if (start.before(zone.summerStart()) || start.after(zone.summerEnd())) {
 				// end is in the summer
-				summerDays = dayOfYear(end) - dayOfYear (_zone.summerStart()) + 1;
+				summerDays = dayOfYear(end) - dayOfYear (zone.summerStart()) + 1;
 			} else {
 				// start is in summer
-				summerDays = dayOfYear(_zone.summerEnd()) - dayOfYear (start) + 1;
+				summerDays = dayOfYear(zone.summerEnd()) - dayOfYear (start) + 1;
 			}
 			summerFraction = summerDays / (dayOfYear(end) - dayOfYear(start) + 1);
 		}
-		result = new Dollars ((usage * _zone.summerRate() * summerFraction) +
-				(usage * _zone.winterRate() * (1 - summerFraction)));
+		result = new Dollars ((usage * zone.summerRate() * summerFraction) +
+				(usage * zone.winterRate() * (1 - summerFraction)));
 		return result;
 	}
 
