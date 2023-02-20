@@ -50,8 +50,7 @@ public class Zone {
 		Dollars result;
 		if (isWinterPeriod(start, end))
 			summerFraction = 0;
-		else if (!start.before(summerStart()) && !start.after(summerEnd()) &&
-				!end.before(summerStart()) && !end.after(summerEnd()))
+		else if (!isWinterPeriod(end, start) && !isWinterPeriod(start, end))
 			summerFraction = 1;
 		else { // part in summer part in winter
 			double summerDays;
