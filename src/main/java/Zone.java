@@ -60,6 +60,11 @@ public class Zone {
 		if (!isWinterPeriod(end, start) && !isWinterPeriod(start, end))
 			return 1;
 		// part in summer part in winter
+		double summerDays = computeSummerDays(start, end);
+		return summerDays / (dayOfYear(end) - dayOfYear(start) + 1);
+	}
+
+	private double computeSummerDays(Date start, Date end) {
 		double summerDays;
 		if (start.before(summerStart()) || start.after(summerEnd())) {
 			// end is in the summer
@@ -68,7 +73,7 @@ public class Zone {
 			// start is in summer
 			summerDays = dayOfYear(summerEnd()) - dayOfYear(start) + 1;
 		}
-		return summerDays / (dayOfYear(end) - dayOfYear(start) + 1);
+		return summerDays;
 	}
 
 	private boolean isWinterPeriod(Date start, Date end) {
