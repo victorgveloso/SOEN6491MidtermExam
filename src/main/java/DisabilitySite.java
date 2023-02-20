@@ -12,8 +12,9 @@ public class DisabilitySite {
 	}
 
 	public void addReading(Reading newReading) {
-		int i;
-		for (i = 0; _readings[i] != null; i++);
+		// add reading to end of array
+		int i = 0;
+		while (_readings[i] != null) i++;
 		_readings[i] = newReading;
 	}
 
