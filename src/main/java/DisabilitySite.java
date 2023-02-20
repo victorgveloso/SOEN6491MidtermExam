@@ -2,7 +2,6 @@ import java.util.Date;
 
 public class DisabilitySite extends AbstractSite {
 	private static final Dollars FUEL_TAX_CAP = new Dollars (0.10);
-	public static final double FUEL_RATE = 0.0175;
 	private Zone _zone;
 	private static final int CAP = 200;
 

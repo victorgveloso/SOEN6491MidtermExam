@@ -1,6 +1,7 @@
 import java.util.Date;
 
 public abstract class AbstractSite {
+    public static final double FUEL_RATE = 0.0175;
     protected static final double TAX_RATE = 0.05;
     private Reading[] _readings = new Reading[1000];
 
