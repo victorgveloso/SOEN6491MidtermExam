@@ -31,6 +31,17 @@ public class ResidentialSite {
 		Dollars result;
 		double summerFraction;
 		// Find out how much of period is in the summer
+		result = getDollars(usage, start, end);
+		result = result.plus(result.times(TAX_RATE));
+		Dollars fuel = new Dollars(usage * 0.0175);
+		result = result.plus(fuel);
+		result = result.plus(fuel.times(TAX_RATE));
+		return result;
+	}
+
+	private Dollars getDollars(int usage, Date start, Date end) {
+		double summerFraction;
+		Dollars result;
 		if (start.after(_zone.summerEnd()) || end.before(_zone.summerStart()))
 			summerFraction = 0;
 		else if (!start.before(_zone.summerStart()) && !start.after(_zone.summerEnd()) &&
@@ -49,10 +60,6 @@ public class ResidentialSite {
 		}
 		result = new Dollars ((usage * _zone.summerRate() * summerFraction) +
 				(usage * _zone.winterRate() * (1 - summerFraction)));
-		result = result.plus(result.times(TAX_RATE));
-		Dollars fuel = new Dollars(usage * 0.0175);
-		result = result.plus(fuel);
-		result = result.plus(fuel.times(TAX_RATE));
 		return result;
 	}
 
