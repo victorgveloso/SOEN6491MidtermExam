@@ -25,10 +25,6 @@ public class Zone {
 		return _name;
 	}
 
-	public Date summerEnd() {
-		return _summerEnd;
-	}
-
 	public Date summerStart() {
 		return _summerStart;
 	}
@@ -53,18 +49,18 @@ public class Zone {
 
 	private double computeSummerDays(Date start, Date end) {
 		double summerDays;
-		if (start.before(summerStart()) || start.after(summerEnd())) {
+		if (start.before(summerStart()) || start.after(_summerEnd)) {
 			// end is in the summer
 			summerDays = Month.dayOfYear(end) - Month.dayOfYear(summerStart()) + 1;
 		} else {
 			// start is in summer
-			summerDays = Month.dayOfYear(summerEnd()) - Month.dayOfYear(start) + 1;
+			summerDays = Month.dayOfYear(_summerEnd) - Month.dayOfYear(start) + 1;
 		}
 		return summerDays;
 	}
 
 	private boolean isWinterPeriod(Date start, Date end) {
-		return start.after(summerEnd()) || end.before(summerStart());
+		return start.after(_summerEnd) || end.before(summerStart());
 	}
 
 }
