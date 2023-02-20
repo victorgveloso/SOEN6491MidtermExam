@@ -39,7 +39,7 @@ public class ResidentialSite {
 		return result;
 	}
 
-	private Dollars getDollars(int usage, Date start, Date end, Zone zone) {
+	public static Dollars getDollars(int usage, Date start, Date end, Zone zone) {
 		double summerFraction;
 		Dollars result;
 		if (start.after(zone.summerEnd()) || end.before(zone.summerStart()))
