@@ -19,8 +19,9 @@ public class DisabilitySite {
 	}
 
 	public Dollars charge() {
-		int i;
-		for (i = 0; _readings[i] != null; i++);
+		// find last reading
+		int i = 0;
+		while (_readings[i] != null) i++;
 		int usage = _readings[i-1].amount() - _readings[i-2].amount();
 		Date end = _readings[i-1].date();
 		Date start = _readings[i-2].date();
