@@ -63,7 +63,7 @@ public class ResidentialSite {
 		return result;
 	}
 
-	int dayOfYear(Date arg) {
+	static int dayOfYear(Date arg) {
 		int result;
 		switch (arg.getMonth()) {
 		case 0:
