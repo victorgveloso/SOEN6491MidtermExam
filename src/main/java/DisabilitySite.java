@@ -12,7 +12,6 @@ public class DisabilitySite extends AbstractSite {
 	@Override
 	protected Dollars charge(int fullUsage, Date start, Date end) {
 		Dollars result;
-		double summerFraction;
 		int usage = Math.min(fullUsage, CAP);
 		result = _zone.computeSeasonRate(usage, start, end);
 		result = result.plus(new Dollars (Math.max(fullUsage - usage, 0) * 0.062));

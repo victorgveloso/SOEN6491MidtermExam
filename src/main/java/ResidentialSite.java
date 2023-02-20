@@ -10,7 +10,6 @@ public class ResidentialSite extends AbstractSite {
 	@Override
 	protected Dollars charge(int usage, Date start, Date end) {
 		Dollars result;
-		double summerFraction;
 		// Find out how much of period is in the summer
 		result = _zone.computeSeasonRate(usage, start, end);
 		result = result.plus(result.times(TAX_RATE));
