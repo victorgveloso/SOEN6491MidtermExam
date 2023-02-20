@@ -16,9 +16,8 @@ public class Zone {
 		_summerEnd = summerEnd;
 	}
 
-	public Zone register() {
+	public void register() {
 		Registry.getInstance().addZone(this);
-		return this;
 	}
 
 	public String name() {
