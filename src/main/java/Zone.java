@@ -56,17 +56,17 @@ public class Zone {
 		if (!isWinterPeriod(end, start) && !isWinterPeriod(start, end))
 			return 1;
 		// part in summer part in winter
-		return computeSummerDays(start, end) / (dayOfYear(end) - dayOfYear(start) + 1);
+		return computeSummerDays(start, end) / (Month.dayOfYear(end) - Month.dayOfYear(start) + 1);
 	}
 
 	private double computeSummerDays(Date start, Date end) {
 		double summerDays;
 		if (start.before(summerStart()) || start.after(summerEnd())) {
 			// end is in the summer
-			summerDays = dayOfYear(end) - dayOfYear(summerStart()) + 1;
+			summerDays = Month.dayOfYear(end) - Month.dayOfYear(summerStart()) + 1;
 		} else {
 			// start is in summer
-			summerDays = dayOfYear(summerEnd()) - dayOfYear(start) + 1;
+			summerDays = Month.dayOfYear(summerEnd()) - Month.dayOfYear(start) + 1;
 		}
 		return summerDays;
 	}
@@ -75,17 +75,4 @@ public class Zone {
 		return start.after(summerEnd()) || end.before(summerStart());
 	}
 
-	private static int dayOfYear(Date arg) {
-		int result = Month.getMonthInstance(arg.getMonth()).getStartingDay();
-		result += arg.getDate();
-		if (isLeapYear(arg)) {
-			result++;
-		}
-		return result;
-	}
-
-	private static boolean isLeapYear(Date arg) {
-		return (arg.getYear() % 4 == 0) && ((arg.getYear() % 100 != 0) ||
-				((arg.getYear() + 1900) % 400 == 0));
-	}
 }

@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public enum Month {
     JANUARY(0,0),
     FEBRUARY(1,31),
@@ -27,6 +29,21 @@ public enum Month {
         }
         return values()[monthIndex];
     }
+
+    public static int dayOfYear(Date arg) {
+        int result = getMonthInstance(arg.getMonth()).getStartingDay();
+        result += arg.getDate();
+        if (isLeapYear(arg)) {
+            result++;
+        }
+        return result;
+    }
+
+    private static boolean isLeapYear(Date arg) {
+        return (arg.getYear() % 4 == 0) && ((arg.getYear() % 100 != 0) ||
+                ((arg.getYear() + 1900) % 400 == 0));
+    }
+
     public int getStartingDay() {
         return startingDay;
     }
