@@ -21,10 +21,6 @@ public class Zone {
 		return this;
 	}
 
-	public static Zone get (String name) {
-		return Registry.getInstance().getZone(name);
-	}
-
 	public String name() {
 		return _name;
 	}
