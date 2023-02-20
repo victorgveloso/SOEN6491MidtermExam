@@ -60,8 +60,7 @@ public class Zone {
 		if (!isWinterPeriod(end, start) && !isWinterPeriod(start, end))
 			return 1;
 		// part in summer part in winter
-		double summerDays = computeSummerDays(start, end);
-		return summerDays / (dayOfYear(end) - dayOfYear(start) + 1);
+		return computeSummerDays(start, end) / (dayOfYear(end) - dayOfYear(start) + 1);
 	}
 
 	private double computeSummerDays(Date start, Date end) {
